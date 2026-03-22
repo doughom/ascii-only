@@ -5,8 +5,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   git \
   && rm -rf /var/lib/apt/lists/*
 
-RUN useradd --system ascii
-USER ascii
+RUN useradd --uid 1001 runner
+USER runner
 
 COPY entrypoint.sh /entrypoint.sh
 CMD ["/entrypoint.sh"]
