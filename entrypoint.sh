@@ -1,11 +1,9 @@
 #!/bin/bash
 exitCode=0
 
-cd "$GITHUB_WORKSPACE"
-
-if [[ -n "$GITHUB_TOKEN" ]]; then
-  git config "url.https://$GITHUB_TOKEN@github.com.insteadOf" "https://github.com"
-fi
+# if [[ -n "$GITHUB_TOKEN" ]]; then
+#   git config "url.https://$GITHUB_TOKEN@github.com.insteadOf" "https://github.com"
+# fi
 
 git fetch origin "$GITHUB_BASE_REF"
 
