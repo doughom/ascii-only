@@ -2,7 +2,7 @@
 exitCode=0
 
 if [[ -n "$GITHUB_TOKEN" ]]; then
-  git config "url.https://$GITHUB_TOKEN:@github.com.insteadOf" "https://github.com"
+  git config "url.https://x-access-token:$GITHUB_TOKEN@github.com.insteadOf" "https://github.com"
 fi
 
 git fetch origin "$GITHUB_BASE_REF"
