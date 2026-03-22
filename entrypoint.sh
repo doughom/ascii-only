@@ -4,10 +4,8 @@ exitCode=0
 cd "$GITHUB_WORKSPACE"
 
 if [[ -n "$GITHUB_TOKEN" ]]; then
-  git remote set-url origin "https://$GITHUB_TOKEN:@github.com/$GITHUB_REPOSITORY"
+  git config "url.https://$GITHUB_TOKEN@github.com.insteadOf" "https://github.com"
 fi
-
-git remote -v
 
 git fetch origin "$GITHUB_BASE_REF"
 
