@@ -2,7 +2,6 @@
 
 failedFiles=0
 
-echo "" >> "$GITHUB_STEP_SUMMARY"
 echo "| File | Status |" >> "$GITHUB_STEP_SUMMARY"
 echo "| --- | --- |" >> "$GITHUB_STEP_SUMMARY"
 
