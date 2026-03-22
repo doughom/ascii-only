@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN useradd --uid 1001 runner
 USER runner
+WORKDIR /github/workspace
 
 COPY entrypoint.sh /entrypoint.sh
 CMD ["/entrypoint.sh"]
