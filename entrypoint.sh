@@ -3,15 +3,7 @@ exitCode=0
 
 cd "$GITHUB_WORKSPACE"
 
-ls -la
-
-echo "PWD: $(pwd)"
-echo "GIT_WORK_TREE: $GIT_WORK_TREE"
-echo "GIT_DIR: $GIT_DIR"
-git config --show-origin --get safe.directory
-
-whoami
-id -u
+git fetch origin "$GITHUB_BASE_REF"
 
 while IFS= read -r -d "" file; do
   output=$(mktemp)
@@ -20,6 +12,6 @@ while IFS= read -r -d "" file; do
     cat "$output"
     ((exitCode+=1))
   fi
-done < <(git diff --name-only -z "$GITHUB_BASE_REF..$GITHUB_SHA")
+done < <(git diff --name-only -z "origin/$GITHUB_BASE_REF..$GITHUB_SHA")
 
 exit $exitCode
