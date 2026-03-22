@@ -47,6 +47,26 @@ jobs:
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
 
+  tag:
+    name: Tag
+    runs-on: ubuntu-24.04
+    needs: check
+    if: ${{ needs.check.outputs.exists == 'false' }}
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: true
+
+      - name: Create tag
+        run: |
+          git tag ${{ needs.check.outputs.tag }}
+          git push origin ${{ needs.check.outputs.tag }}
+
   build:
     name: Build
     runs-on: ubuntu-24.04
