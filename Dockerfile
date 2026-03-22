@@ -6,8 +6,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   git \
   && rm -rf /var/lib/apt/lists/*
 
-RUN useradd --uid 1001 runner
+RUN useradd --uid 1001 runnergit pu
 USER runner
+WORKDIR /github/workspace
 
 COPY entrypoint.sh /entrypoint.sh
 CMD ["/entrypoint.sh"]

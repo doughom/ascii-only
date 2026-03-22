@@ -1,7 +1,11 @@
 #!/bin/bash
 exitCode=0
 
-cd "$GITHUB_WORKSPACE"
+if [[ -n "$GITHUB_TOKEN" ]]; then
+  git config "url.https://x-access-token:$GITHUB_TOKEN@github.com.insteadOf" "https://github.com"
+fi
+
+git fetch origin "$GITHUB_BASE_REF"
 
 while IFS= read -r -d "" file; do
   output=$(mktemp)
@@ -9,7 +13,9 @@ while IFS= read -r -d "" file; do
     sed -i -E "s/^([0-9])+/::error file=$file,line=\1:/g" "$output"
     cat "$output"
     ((exitCode+=1))
+  else
+    echo "::notice file=$file::OK"
   fi
-done < <(git diff --name-only -z "$GITHUB_BASE_REF..$GITHUB_SHA")
+done < <(git diff --name-only -z "origin/$GITHUB_BASE_REF..$GITHUB_SHA")
 
 exit $exitCode

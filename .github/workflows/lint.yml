@@ -10,8 +10,8 @@ on:
 permissions: {}
 
 jobs:
-  lint:
-    name: Lint
+  ascii-only:
+    name: ASCII Only
     runs-on: ubuntu-24.04
 
     permissions:
@@ -26,3 +26,5 @@ jobs:
 
       - name: ASCII Only
         uses: ./
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
