@@ -24,7 +24,12 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      # When version is updated in action.yml, the image doesn't exist in the registry yet.
+      - name: Local build
+        run: |
+          set -eu
+          version=$(grep -oE "[0-9]+\.[0-9]+\.[0-9]+" action.yml)
+          docker image build . --tag ghcr.io/${{ github.repository }}:v$version
+
       - name: ASCII Only
         uses: ./
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

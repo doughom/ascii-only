@@ -2,4 +2,4 @@ name: ASCII Only
 description: Check that changed files contain ASCII characters only.
 runs:
   using: docker
-  image: Dockerfile
+  image: ghcr.io/doughom/ascii-only:v0.1.0
