@@ -26,3 +26,5 @@ jobs:
 
       - name: ASCII Only
         uses: ./
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
