@@ -3,6 +3,10 @@ exitCode=0
 
 cd "$GITHUB_WORKSPACE"
 
+if [[ -n "$GITHUB_TOKEN" ]]; then
+  git remote set-url origin "https://$GITHUB_TOKEN:@github.com/$GITHUB_REPOSITORY"
+fi
+
 git remote -v
 
 git fetch origin "$GITHUB_BASE_REF"
