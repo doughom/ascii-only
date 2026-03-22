@@ -1,5 +1,6 @@
 ---
-name: Build image
+# Build image if tag in action.yml changes.
+name: Build
 
 on:
   workflow_dispatch:
@@ -13,13 +14,16 @@ jobs:
   check:
     name: Check if tag exists
     runs-on: ubuntu-24.04
-    continue-on-error: true
 
     outputs:
       tag: ${{ steps.tag.outputs.version }}
+      exists: ${{ steps.exists.outputs.exists }}
 
     permissions:
       contents: read
+
+    env:
+      REGISTRY: ghcr.io
 
     steps:
       - name: Checkout
@@ -35,16 +39,19 @@ jobs:
           echo "version=v$version" >> "$GITHUB_OUTPUT"
 
       - name: Check if tag exists
+        id: exists
         run: |
           if docker image pull --quiet ${{ env.REGISTRY }}/${{ github.repository }}:${{ steps.tag.outputs.version }}; then
-            exit 1
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
 
   build:
     name: Build
     runs-on: ubuntu-24.04
     needs: check
-    if: ${{ needs.check.result == 'success' }}
+    if: ${{ needs.check.outputs.exists == 'false' }}
     
     permissions:
       attestations: write
