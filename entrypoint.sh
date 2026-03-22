@@ -3,6 +3,8 @@ exitCode=0
 
 cd "$GITHUB_WORKSPACE"
 
+git remote -v
+
 git fetch origin "$GITHUB_BASE_REF"
 
 while IFS= read -r -d "" file; do
